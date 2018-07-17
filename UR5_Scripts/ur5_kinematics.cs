@@ -18,7 +18,8 @@ using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 
-public class ur5_kinematics : MonoBehaviour {
+public class ur5_kinematics : MonoBehaviour
+{
     public Button thisButton;
     public InputField outputText;
     public float METER_RATIO;
@@ -26,8 +27,8 @@ public class ur5_kinematics : MonoBehaviour {
     public Button goButton;
     public GameObject locationSphere;
     public bool enabled = true;
-    public bool debug_pose = false; 
-    public float[] angle_vector = new float[6];
+    public bool debug_pose = false;
+    public float[] output_xyz_rot = new float[6];
 
 
     //[Range(0, 360)]
@@ -35,9 +36,9 @@ public class ur5_kinematics : MonoBehaviour {
 
 
     //Source 0 is the only one that best matches
-    [Range(0,7)]
+    [Range(0, 7)]
     public int select_source;
-     
+
     public float offset_0 = -42.18f, offset_1, offset_2, offset_3, offset_4, offset_5;
     private ur5 robotModel;
 
@@ -50,7 +51,8 @@ public class ur5_kinematics : MonoBehaviour {
     Matrix<float> robotTheta_filt;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //thisButton = this.GetComponent<Button>();
         thisButton.onClick.AddListener(TaskOnClick);
 
@@ -75,11 +77,12 @@ public class ur5_kinematics : MonoBehaviour {
 
 
     //  Called when get-IK button is clicked
-    void TaskOnClick() {
+    void TaskOnClick()
+    {
         // Get OFFSET values from sliders and run FK to get pose
         Vector<float> jointVals = Vector<float>.Build.DenseOfArray(controller.offsetSliderValues(controller.getSliderList()));
-        Matrix<float> robotPose = robotModel.fwd_kin(jointVals.Multiply(( Mathf.PI  / 180f)));  // in rads
-        Debug.Log("Input Robot Pose: " + robotPose.ToString(4,4));
+        Matrix<float> robotPose = robotModel.fwd_kin(jointVals.Multiply((Mathf.PI / 180f)));  // in rads
+        Debug.Log("Input Robot Pose: " + robotPose.ToString(4, 4));
         robotModel.setCurrentJoints(jointVals.Multiply((Mathf.PI / 180f)));
 
         // Use pose to run IK
@@ -129,13 +132,13 @@ public class ur5_kinematics : MonoBehaviour {
 
             //Setting up variables
             pt = pt * METER_RATIO;
-            x = -pt.x;  
-            y = pt.y;   
-            z = pt.z;   
+            x = -pt.x;
+            y = pt.y;
+            z = pt.z;
             rx = eRot.x;
             ry = eRot.y;
             rz = eRot.z;
-            
+
             //Format the position into a matrix
             Matrix<float> robot_to_cube = robotModel.format_pose(x, y, z, rx, ry, rz);
             Matrix<float> world_to_cube = robot_to_cube.Multiply(robot_to_world);
@@ -147,32 +150,19 @@ public class ur5_kinematics : MonoBehaviour {
             //Debug.Log(matrix_thetha);
             //Debug.Log(world_to_cube);
 
-            /*  Data formatter for matrix
-             * 
-             * 
-             * 
-             * 
-             */
-
+            /*  Data formatter for matrix*/
             Matrix<float> fwd_kin_mat = robotModel.fwd_kin(temp_sol);
-            fwd_kin_mat[1, 3] = fwd_kin_mat[1, 3] * -1;
-            0
-
-
-
+            locate_real_world_pt(fwd_kin_mat);
             //Debug.Log(sanity_check);
-
 
             //Convert into degrees
             var soln = matrix_thetha.Column(select_source).Multiply((180f / Mathf.PI));
             //Debug.Log(soln);
-
-
- 
             //Conditional for debug pose
-            if (debug_pose) {
-                float[] my_vals = { -42.58f, -43.69f, -99.57f, 233.2f, -89.66f, -47.09f};
-                angle_vector = my_vals;
+            if (debug_pose)
+            {
+                float[] my_vals = { -42.58f, -43.69f, -99.57f, 233.2f, -89.66f, -47.09f };
+                //angle_vector = my_vals;
                 controller.setSliderList(controller.offsetJointValues(my_vals));
             }
             else
@@ -184,19 +174,68 @@ public class ur5_kinematics : MonoBehaviour {
                 array_sol[3] += offset_3;
                 array_sol[4] += offset_4;
                 array_sol[5] += offset_5;
-                angle_vector = array_sol;
+                //angle_vector = array_sol;
                 controller.setSliderList(controller.offsetJointValues(array_sol));
-                
+
             }
-            
+
             outputText.text = matrix_thetha.Column(0).Multiply((180f / Mathf.PI)).ToVectorString("0.0  ");
         }
     }
 
+    void locate_real_world_pt(Matrix<float> fwd_kin_mat)
+    {
+        //Get the Rotational Matrix from the fwd_kinematics
+        Matrix<float> rot_mat = Matrix<float>.Build.DenseOfArray(new float[,] {
+                { fwd_kin_mat[0,0],fwd_kin_mat[1,0],fwd_kin_mat[2,0] },
+                { fwd_kin_mat[0,1],fwd_kin_mat[1,1],fwd_kin_mat[2,1] },
+                { fwd_kin_mat[0,2],fwd_kin_mat[1,2],fwd_kin_mat[2,2] } });
+
+        //Rotate on the Z axis by 42.18 degrees to match box
+        Matrix<float> z_rot = Matrix<float>.Build.DenseOfArray(new float[,] {
+                {0.7410F,-0.6714F,0 },
+                {0.6714F, 0.7410F,0 },
+                {0,0,1 },           });
+
+        //Multiply and Negate the X axis
+        Matrix<float> final_mat = rot_mat.Multiply(z_rot);
+        final_mat[0, 0] = final_mat[0, 0] * -1;
+        final_mat[1, 0] = final_mat[1, 0] * -1;
+        final_mat[2, 0] = final_mat[2, 0] * -1;
+
+        //Get the Euler Angles
+        Vector<float> rotations = robotModel.euler_from_mat(final_mat, "xyz");
+
+        //XYZ position fix
+        Vector<float> positions = Vector<float>.Build.Dense(new float[] { fwd_kin_mat[0,3], fwd_kin_mat[ 1,3], fwd_kin_mat[2,3] }); //ZXY => XYZ
+        positions = positions.Multiply(9.82216F);   //=> Convert to "real" units
+        positions = positions.Multiply(0.1F);       //=> Convert to milimmeters 
+        
+        //Set global array
+        set_final_pos_UR5(positions, rotations);
+    }
+
+    void set_final_pos_UR5(Vector<float> position, Vector<float> euler_form)
+    {
+        List<float> temp_list = new List<float>();
+        foreach (float i in position)
+        {
+            temp_list.Add(i);
+        }
+        foreach (float j in euler_form)
+        {
+            temp_list.Add(j);
+        }
+        output_xyz_rot = temp_list.ToArray();
+    }
+
     public float[] get_vector_UR5()
     {
-        return angle_vector;
+        return output_xyz_rot;
     }
+
+
+
 
 
     //  Converted python code from SK Gupta's lab
@@ -220,7 +259,7 @@ public class ur5_kinematics : MonoBehaviour {
             d.SetValues(new float[] { 0.089159f, 0, 0, 0.10915f, 0.09465f, 0.0823f });
             alpha.SetValues(new float[] { Mathf.PI / 2, 0, 0, Mathf.PI / 2, -1 * Mathf.PI / 2, 0 });
         }
-        
+
 
         public void setLimits(float[] upper, float[] lower)
         {
@@ -238,7 +277,8 @@ public class ur5_kinematics : MonoBehaviour {
 
 
 
-        private Matrix<float> DH(float aa, float aalpha, float dd, float ttheta) {
+        private Matrix<float> DH(float aa, float aalpha, float dd, float ttheta)
+        {
             dh = Matrix<float>.Build.DenseOfArray(new float[,] {
                 { Mathf.Cos(ttheta), -1 * Mathf.Sin(ttheta) * Mathf.Cos(aalpha), Mathf.Sin(ttheta) * Mathf.Sin(aalpha), aa* Mathf.Cos(ttheta) },
                 { Mathf.Sin(ttheta), Mathf.Cos(ttheta) * Mathf.Cos(aalpha), -1 * Mathf.Cos(ttheta) * Mathf.Sin(aalpha), aa* Mathf.Sin(ttheta) },
@@ -246,8 +286,10 @@ public class ur5_kinematics : MonoBehaviour {
                 { 0, 0, 0, 1} });
 
 
-            for (int i = 0; i < dh.RowCount; i++) {
-                for (int j = 0; j < dh.ColumnCount; j++) {
+            for (int i = 0; i < dh.RowCount; i++)
+            {
+                for (int j = 0; j < dh.ColumnCount; j++)
+                {
                     if (Mathf.Abs(dh[i, j]) < 0.0001f)
                         dh[i, j] = 0.0f;
                 }
@@ -257,7 +299,8 @@ public class ur5_kinematics : MonoBehaviour {
         }
 
         // in rads!
-        public Matrix<float> fwd_kin(Vector<float> joints) {
+        public Matrix<float> fwd_kin(Vector<float> joints)
+        {
             var T01 = DH(a[0], alpha[0], d[0], joints[0]);
             var T12 = DH(a[1], alpha[1], d[1], joints[1]);
             var T23 = DH(a[2], alpha[2], d[2], joints[2]);
@@ -269,9 +312,61 @@ public class ur5_kinematics : MonoBehaviour {
             return (((((T01 * T12) * T23) * T34) * T45) * T56);
         }
 
+        public Vector<float> euler_from_mat(Matrix<float> rotation_matrix, string euler_type)
+        {
+            //% gamma is rotation about x
+            //%beta is rotation about y
+            //%alpha is rotation about z
+            //% returns Euler ZYX angles from rotation matrix
+             
+            float alpha = 0, gamma = 0, beta = 0;
+            float r11 = rotation_matrix[0, 0];
+            float r12 = rotation_matrix[0, 1];
+            float r13 = rotation_matrix[0, 2];
+            float r21 = rotation_matrix[1, 0];
+            float r22 = rotation_matrix[1, 1];
+            float r23 = rotation_matrix[1, 2];
+            float r31 = rotation_matrix[2, 0];
+            float r32 = rotation_matrix[2, 1];
+            float r33 = rotation_matrix[2, 2];
+
+            //% alpha is angle about z
+            // % beta is angle about y
+            //  % gamma is angle about x
+            if (euler_type == "zyx")
+            {
+                //% gimbal
+                if (r11 == 0 && r21 == 0)
+                {
+                    alpha = 0;
+                    beta = Mathf.PI / 2;
+                    gamma = Mathf.Atan2(r12, r22);
+                }
+                else
+                {
+                    alpha = Mathf.Atan2(r21, r11);
+                    beta = Mathf.Atan2(-r31, Mathf.Sqrt((r11 * r11) + (r21 * r21)));
+                    gamma = Mathf.Atan2(r32, r33);
+                }
+            }
+            else if (euler_type == "xyz")
+            {
+                alpha = Mathf.Atan2(-r12, r11);
+                gamma = Mathf.Atan2(-r23, r33);
+                beta = Mathf.Atan2(r13, r33 / Mathf.Cos(gamma));
+            }
+            float[] Euler = { gamma, beta, alpha };
+            Vector<float> yaw_pitch_roll = Vector<float>.Build.Dense(Euler);
+
+            return yaw_pitch_roll.Multiply(180 / Mathf.PI);
+        }
+
+
+
         //Formatted in Positional(Meters) and rotational(Radians) 
-        public Matrix<float> format_pose(float x_pos, float y_pos, float z_pos, float x_rot, float y_rot, float z_rot) {
-            Matrix<float> pose = Matrix<float>.Build.Dense(4,4);
+        public Matrix<float> format_pose(float x_pos, float y_pos, float z_pos, float x_rot, float y_rot, float z_rot)
+        {
+            Matrix<float> pose = Matrix<float>.Build.Dense(4, 4);
 
             // roll, pitch, yaw -> z, y, x
             float roll = z_rot;
@@ -282,17 +377,17 @@ public class ur5_kinematics : MonoBehaviour {
             pose[0, 1] = Mathf.Cos(yaw) * Mathf.Sin(roll) + Mathf.Cos(roll) * Mathf.Sin(pitch) * Mathf.Sin(yaw);
             pose[0, 2] = Mathf.Sin(roll) * Mathf.Sin(yaw) - Mathf.Cos(roll) * Mathf.Cos(yaw) * Mathf.Sin(pitch);
 
-            pose[1, 0] =  -1f * Mathf.Cos(pitch) * Mathf.Sin(roll);
+            pose[1, 0] = -1f * Mathf.Cos(pitch) * Mathf.Sin(roll);
             pose[1, 1] = Mathf.Cos(roll) * Mathf.Cos(yaw) - Mathf.Sin(pitch) * Mathf.Sin(roll) * Mathf.Sin(yaw);
             pose[1, 2] = Mathf.Cos(roll) * Mathf.Sin(yaw) + Mathf.Cos(yaw) * Mathf.Sin(pitch) * Mathf.Sin(roll);
 
-            pose[2, 0] =  Mathf.Sin(pitch);
+            pose[2, 0] = Mathf.Sin(pitch);
             pose[2, 1] = -Mathf.Cos(pitch) * Mathf.Sin(yaw);
             pose[2, 2] = Mathf.Cos(pitch) * Mathf.Cos(yaw);
 
-            pose[0,3 ] = z_pos;
-            pose[1,3] = x_pos;
-            pose[2,3] = y_pos;
+            pose[0, 3] = z_pos;
+            pose[1, 3] = x_pos;
+            pose[2, 3] = y_pos;
             pose[3, 3] = 1f;
 
             return pose;
@@ -300,10 +395,11 @@ public class ur5_kinematics : MonoBehaviour {
 
 
 
-        public Matrix<float> inv_kin(Matrix<float> pose) {
+        public Matrix<float> inv_kin(Matrix<float> pose)
+        {
             // pose is the 4x4 matrix of the end effector
 
-            Matrix<float> theta = Matrix<float>.Build.Dense(6,8);
+            Matrix<float> theta = Matrix<float>.Build.Dense(6, 8);
 
             // theta1
             var temp1 = Vector<float>.Build.DenseOfArray(new float[] { 0, 0, -d[5], 1 });
@@ -321,7 +417,8 @@ public class ur5_kinematics : MonoBehaviour {
             theta.SetSubMatrix(0, 4, Matrix<float>.Build.Dense(1, 4, Mathf.PI / 2 + psi - phi));
 
             // theta5
-            for (int c = 0; c < 4; c++) {
+            for (int c = 0; c < 4; c++)
+            {
                 var T10 = DH(a[0], alpha[0], d[0], theta[0, c]).Inverse();
                 var T16 = (T10 * pose);
                 var p16z = T16[2, 3];
@@ -340,7 +437,8 @@ public class ur5_kinematics : MonoBehaviour {
             }
 
             // theta6
-            for (int c = 0; c <= 6 && c % 2 == 0; c++) {
+            for (int c = 0; c <= 6 && c % 2 == 0; c++)
+            {
                 var T01 = DH(a[0], alpha[0], d[0], theta[0, c]);
                 var T61 = pose.Inverse() * T01;
                 var T61zy = T61[1, 2];
@@ -352,7 +450,8 @@ public class ur5_kinematics : MonoBehaviour {
             }
 
             // theta3
-            for (int c = 0; c <= 6 && c % 2 == 0; c++) {
+            for (int c = 0; c <= 6 && c % 2 == 0; c++)
+            {
                 var T10 = DH(a[0], alpha[0], d[0], theta[0, c]).Inverse();
                 var T65 = DH(a[5], alpha[5], d[5], theta[5, c]).Inverse();
                 var T54 = DH(a[4], alpha[4], d[4], theta[4, c]).Inverse();
@@ -372,7 +471,8 @@ public class ur5_kinematics : MonoBehaviour {
             }
 
             // theta2 theta4
-            for (int c = 0; c < 8; c++) {
+            for (int c = 0; c < 8; c++)
+            {
                 var T10 = DH(a[0], alpha[0], d[0], theta[0, c]).Inverse();
                 var T65 = DH(a[5], alpha[5], d[5], theta[5, c]).Inverse();
                 var T54 = DH(a[4], alpha[4], d[4], theta[4, c]).Inverse();
@@ -388,8 +488,10 @@ public class ur5_kinematics : MonoBehaviour {
                 theta[3, c] = Mathf.Atan2(T34[1, 0], T34[0, 0]);
             }
 
-            for (int i = 0; i < theta.RowCount; i++) {
-                for (int j = 0; j < theta.ColumnCount; j++) {
+            for (int i = 0; i < theta.RowCount; i++)
+            {
+                for (int j = 0; j < theta.ColumnCount; j++)
+                {
                     if (theta[i, j] > Mathf.PI)
                         theta[i, j] = theta[i, j] - 2 * Mathf.PI;
                     if (theta[i, j] < -1 * Mathf.PI)
@@ -430,7 +532,8 @@ public class ur5_kinematics : MonoBehaviour {
                     float z = coords[2];
 
                     // Check EE height AND distance between soln & desired loc
-                    if (z > 0.1 && d < 0.1) {
+                    if (z > 0.1 && d < 0.1)
+                    {
 
                         // Check joint limits
                         bool violated = false;
@@ -440,11 +543,13 @@ public class ur5_kinematics : MonoBehaviour {
                                 violated = true;
                         }
 
-                        if (!violated) {
+                        if (!violated)
+                        {
                             //Debug.Log("Adding vector:" + theta.SubMatrix(0, r, i, 1));
                             newTheta = newTheta.Append(theta.SubMatrix(0, r, i, 1));
                         }
-                        else {
+                        else
+                        {
                             Debug.Log("Did not add vector (joint limits):" + theta.SubMatrix(0, r, i, 1));
                         }
 
@@ -465,7 +570,8 @@ public class ur5_kinematics : MonoBehaviour {
         }
 
 
-        private Matrix<float> sortResults(Matrix<float> newTheta) {
+        private Matrix<float> sortResults(Matrix<float> newTheta)
+        {
             int r = newTheta.RowCount;  // Should always be 6
             int c = newTheta.ColumnCount;
 
@@ -486,8 +592,9 @@ public class ur5_kinematics : MonoBehaviour {
             Debug.Log("Sorted indices: " + indices);
 
             Matrix<float> sortedTheta = Matrix<float>.Build.Dense(r, c);
-            for (int i = 0; i < c; i++) {
-                sortedTheta.SetColumn(i, newTheta.Column((int)indices[i]) );
+            for (int i = 0; i < c; i++)
+            {
+                sortedTheta.SetColumn(i, newTheta.Column((int)indices[i]));
             }
             //Debug.Log("Sorted solutions: " + sortedTheta);
 
