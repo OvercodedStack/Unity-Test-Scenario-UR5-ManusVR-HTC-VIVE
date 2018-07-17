@@ -141,14 +141,27 @@ public class ur5_kinematics : MonoBehaviour {
             Matrix<float> world_to_cube = robot_to_cube.Multiply(robot_to_world);
             Matrix<float> matrix_thetha = robotModel.inv_kin(world_to_cube);
             Vector<float> temp_sol = matrix_thetha.Column(select_source);
-            
+
             //Debug Only
             //Debug.Log("Sanity");
             //Debug.Log(matrix_thetha);
             //Debug.Log(world_to_cube);
-            //Matrix<float> sanity_check = robotModel.fwd_kin(temp_sol);
+
+            /*  Data formatter for matrix
+             * 
+             * 
+             * 
+             * 
+             */
+
+            Matrix<float> fwd_kin_mat = robotModel.fwd_kin(temp_sol);
+            fwd_kin_mat[1, 3] = fwd_kin_mat[1, 3] * -1;
+            0
+
+
+
             //Debug.Log(sanity_check);
-            
+
 
             //Convert into degrees
             var soln = matrix_thetha.Column(select_source).Multiply((180f / Mathf.PI));
