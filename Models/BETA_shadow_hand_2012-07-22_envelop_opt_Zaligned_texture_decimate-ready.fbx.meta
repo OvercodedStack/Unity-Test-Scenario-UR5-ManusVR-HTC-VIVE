@@ -1,0 +1,393 @@
+fileFormatVersion: 2
+guid: 3568edac083ec844995a4b34b8a700c6
+timeCreated: 1532370775
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: ArmatureFF
+    100002: ArmatureLF
+    100004: ArmatureMF
+    100006: ArmaturePalm
+    100008: ArmatureRF
+    100010: ArmatureTH
+    100012: ArmatureWR
+    100014: //RootNode
+    100016: Bone
+    100018: Bone 1
+    100020: Bone.001
+    100022: Bone.001_end
+    100024: Bone.003
+    100026: Bone.003_end
+    100028: Bone_end
+    100030: Bone_end 1
+    100032: distal
+    100034: distal 1
+    100036: distal 2
+    100038: distal 3
+    100040: distal 4
+    100042: distal 5
+    100044: distal_end
+    100046: distal_end 1
+    100048: distal_end 2
+    100050: distal_end 3
+    100052: distal_end 4
+    100054: F1group
+    100056: F1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    100058: F2group
+    100060: F2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    100062: F3group
+    100064: F3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    100066: FFdest
+    100068: FFdest_end
+    100070: FRotorgroup
+    100072: FRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    100074: L1group
+    100076: L1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    100078: L2group
+    100080: L2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    100082: L3group
+    100084: L3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    100086: Lamp.003
+    100088: LFdest
+    100090: LFdest_end
+    100092: LRotorgroup
+    100094: LRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    100096: M1group
+    100098: M1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    100100: M2group
+    100102: M2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    100104: M3group
+    100106: M3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    100108: MetaCarpal
+    100110: metacarpal
+    100112: MetaCarpalgroup
+    100114: MetaCarpalgroup|metacarpal|Dupli|0.0.0.0.0.0.0.0.0
+    100116: MetaCarpalRotate
+    100118: MFdest
+    100120: MFdest_end
+    100122: middle
+    100124: middle 1
+    100126: middle 2
+    100128: middle 3
+    100130: middle 4
+    100132: middle 5
+    100134: MRotorgroup
+    100136: MRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    100138: palm
+    100140: Palmgroup
+    100142: Palmgroup|palm|Dupli|0.0.0.0.0.0.0.0.0
+    100144: proximal
+    100146: proximal 1
+    100148: proximal 2
+    100150: proximal 3
+    100152: proximal 4
+    100154: proximal 5
+    100156: R1group
+    100158: R1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    100160: R2group
+    100162: R2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    100164: R3group
+    100166: R3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    100168: RFdest
+    100170: RFdest_end
+    100172: rotor
+    100174: rotor 1
+    100176: rotor 2
+    100178: rotor 3
+    100180: rotor 4
+    100182: RRotorgroup
+    100184: RRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    100186: TH2group
+    100188: TH2group|th_middle|Dupli|0.0.0.0.0.0.0.0.0
+    100190: TH3group
+    100192: TH3group|th_proximal|Dupli|0.0.0.0.0.0.0.0.0
+    100194: th_distal
+    100196: th_distal.001
+    100198: th_distal.001|th_distal|Dupli|0.0.0.0.0.0.0.0.0
+    100200: th_middle
+    100202: th_proximal
+    100204: wrist
+    100206: Wristgroup
+    100208: Wristgroup|wrist|Dupli|0.0.0.0.0.0.0.0.0
+    400000: ArmatureFF
+    400002: ArmatureLF
+    400004: ArmatureMF
+    400006: ArmaturePalm
+    400008: ArmatureRF
+    400010: ArmatureTH
+    400012: ArmatureWR
+    400014: //RootNode
+    400016: Bone
+    400018: Bone 1
+    400020: Bone.001
+    400022: Bone.001_end
+    400024: Bone.003
+    400026: Bone.003_end
+    400028: Bone_end
+    400030: Bone_end 1
+    400032: distal
+    400034: distal 1
+    400036: distal 2
+    400038: distal 3
+    400040: distal 4
+    400042: distal 5
+    400044: distal_end
+    400046: distal_end 1
+    400048: distal_end 2
+    400050: distal_end 3
+    400052: distal_end 4
+    400054: F1group
+    400056: F1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    400058: F2group
+    400060: F2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    400062: F3group
+    400064: F3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    400066: FFdest
+    400068: FFdest_end
+    400070: FRotorgroup
+    400072: FRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    400074: L1group
+    400076: L1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    400078: L2group
+    400080: L2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    400082: L3group
+    400084: L3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    400086: Lamp.003
+    400088: LFdest
+    400090: LFdest_end
+    400092: LRotorgroup
+    400094: LRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    400096: M1group
+    400098: M1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    400100: M2group
+    400102: M2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    400104: M3group
+    400106: M3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    400108: MetaCarpal
+    400110: metacarpal
+    400112: MetaCarpalgroup
+    400114: MetaCarpalgroup|metacarpal|Dupli|0.0.0.0.0.0.0.0.0
+    400116: MetaCarpalRotate
+    400118: MFdest
+    400120: MFdest_end
+    400122: middle
+    400124: middle 1
+    400126: middle 2
+    400128: middle 3
+    400130: middle 4
+    400132: middle 5
+    400134: MRotorgroup
+    400136: MRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    400138: palm
+    400140: Palmgroup
+    400142: Palmgroup|palm|Dupli|0.0.0.0.0.0.0.0.0
+    400144: proximal
+    400146: proximal 1
+    400148: proximal 2
+    400150: proximal 3
+    400152: proximal 4
+    400154: proximal 5
+    400156: R1group
+    400158: R1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    400160: R2group
+    400162: R2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    400164: R3group
+    400166: R3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    400168: RFdest
+    400170: RFdest_end
+    400172: rotor
+    400174: rotor 1
+    400176: rotor 2
+    400178: rotor 3
+    400180: rotor 4
+    400182: RRotorgroup
+    400184: RRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    400186: TH2group
+    400188: TH2group|th_middle|Dupli|0.0.0.0.0.0.0.0.0
+    400190: TH3group
+    400192: TH3group|th_proximal|Dupli|0.0.0.0.0.0.0.0.0
+    400194: th_distal
+    400196: th_distal.001
+    400198: th_distal.001|th_distal|Dupli|0.0.0.0.0.0.0.0.0
+    400200: th_middle
+    400202: th_proximal
+    400204: wrist
+    400206: Wristgroup
+    400208: Wristgroup|wrist|Dupli|0.0.0.0.0.0.0.0.0
+    2300000: distal
+    2300002: F1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    2300004: F2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    2300006: F3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    2300008: FRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    2300010: L1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    2300012: L2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    2300014: L3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    2300016: LRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    2300018: M1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    2300020: M2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    2300022: M3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    2300024: metacarpal
+    2300026: MetaCarpalgroup|metacarpal|Dupli|0.0.0.0.0.0.0.0.0
+    2300028: middle
+    2300030: MRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    2300032: palm
+    2300034: Palmgroup|palm|Dupli|0.0.0.0.0.0.0.0.0
+    2300036: proximal
+    2300038: R1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    2300040: R2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    2300042: R3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    2300044: rotor
+    2300046: RRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    2300048: TH2group|th_middle|Dupli|0.0.0.0.0.0.0.0.0
+    2300050: TH3group|th_proximal|Dupli|0.0.0.0.0.0.0.0.0
+    2300052: th_distal
+    2300054: th_distal.001|th_distal|Dupli|0.0.0.0.0.0.0.0.0
+    2300056: th_middle
+    2300058: th_proximal
+    2300060: wrist
+    2300062: Wristgroup|wrist|Dupli|0.0.0.0.0.0.0.0.0
+    3300000: distal
+    3300002: F1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    3300004: F2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    3300006: F3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    3300008: FRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    3300010: L1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    3300012: L2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    3300014: L3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    3300016: LRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    3300018: M1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    3300020: M2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    3300022: M3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    3300024: metacarpal
+    3300026: MetaCarpalgroup|metacarpal|Dupli|0.0.0.0.0.0.0.0.0
+    3300028: middle
+    3300030: MRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    3300032: palm
+    3300034: Palmgroup|palm|Dupli|0.0.0.0.0.0.0.0.0
+    3300036: proximal
+    3300038: R1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    3300040: R2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    3300042: R3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    3300044: rotor
+    3300046: RRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    3300048: TH2group|th_middle|Dupli|0.0.0.0.0.0.0.0.0
+    3300050: TH3group|th_proximal|Dupli|0.0.0.0.0.0.0.0.0
+    3300052: th_distal
+    3300054: th_distal.001|th_distal|Dupli|0.0.0.0.0.0.0.0.0
+    3300056: th_middle
+    3300058: th_proximal
+    3300060: wrist
+    3300062: Wristgroup|wrist|Dupli|0.0.0.0.0.0.0.0.0
+    4300000: FRotorgroup|rotor|Dupli|0.0.0.0.0.0.0.0.0
+    4300002: F3group|proximal|Dupli|0.0.0.0.0.0.0.0.0
+    4300004: F2group|middle|Dupli|0.0.0.0.0.0.0.0.0
+    4300006: F1group|distal|Dupli|0.0.0.0.0.0.0.0.0
+    4300008: MetaCarpalgroup|metacarpal|Dupli|0.0.0.0.0.0.0.0.0
+    4300010: TH3group|th_proximal|Dupli|0.0.0.0.0.0.0.0.0
+    4300012: TH2group|th_middle|Dupli|0.0.0.0.0.0.0.0.0
+    4300014: th_distal.001|th_distal|Dupli|0.0.0.0.0.0.0.0.0
+    4300016: Palmgroup|palm|Dupli|0.0.0.0.0.0.0.0.0
+    4300018: Wristgroup|wrist|Dupli|0.0.0.0.0.0.0.0.0
+    7400000: ArmaturePalm|Action.001
+    7400002: ArmatureFF|Action.001
+    7400004: ArmatureMF|Action.001
+    7400006: ArmatureRF|Action.001
+    7400008: ArmatureLF|Action.001
+    7400010: ArmatureTH|Action.001
+    7400012: ArmatureWR|Action.001
+    9500000: //RootNode
+    10800000: Lamp.003
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: back_palm
+    second: {fileID: 2100000, guid: ee91907715e4fe746bfda0e9d40ffe85, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: black_spec
+    second: {fileID: 2100000, guid: 5b92623ae810e3b46ba00eb9b9b6c07a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: osg2mat0
+    second: {fileID: 2100000, guid: c427eca96afddc64a895cb44a7af0c7e, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
