@@ -187,9 +187,9 @@ public class ur5_kinematics : MonoBehaviour
     {
         //Get the Rotational Matrix from the fwd_kinematics
         Matrix<float> rot_mat = Matrix<float>.Build.DenseOfArray(new float[,] {
-                { fwd_kin_mat[0,0],fwd_kin_mat[1,0],fwd_kin_mat[2,0] },
-                { fwd_kin_mat[0,1],fwd_kin_mat[1,1],fwd_kin_mat[2,1] },
-                { fwd_kin_mat[0,2],fwd_kin_mat[1,2],fwd_kin_mat[2,2] } });
+                { fwd_kin_mat[0,0],fwd_kin_mat[0,1],fwd_kin_mat[0,2] },
+                { fwd_kin_mat[1,0],fwd_kin_mat[1,1],fwd_kin_mat[1,2] },
+                { fwd_kin_mat[2,0],fwd_kin_mat[2,1],fwd_kin_mat[2,2] } });
 
         //Rotate on the Z axis by 42.18 degrees to match box
         Matrix<float> z_rot = Matrix<float>.Build.DenseOfArray(new float[,] {
@@ -202,14 +202,14 @@ public class ur5_kinematics : MonoBehaviour
         final_mat[0, 0] = final_mat[0, 0] * -1;
         final_mat[1, 0] = final_mat[1, 0] * -1;
         final_mat[2, 0] = final_mat[2, 0] * -1;
-
+        
         //Get the Euler Angles
         Vector<float> rotations = robotModel.euler_from_mat(final_mat, "xyz");
 
         //XYZ position fix
         Vector<float> positions = Vector<float>.Build.Dense(new float[] { fwd_kin_mat[0,3], fwd_kin_mat[ 1,3], fwd_kin_mat[2,3] }); //ZXY => XYZ
         positions = positions.Multiply(9.82216F);   //=> Convert to "real" units
-        positions = positions.Multiply(0.1F);       //=> Convert to milimmeters 
+        positions = positions.Multiply(1000F);       //=> Convert to milimmeters 
         
         //Set global array
         set_final_pos_UR5(positions, rotations);
