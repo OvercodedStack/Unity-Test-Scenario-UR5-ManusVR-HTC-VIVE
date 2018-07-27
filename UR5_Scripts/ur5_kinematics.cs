@@ -29,6 +29,7 @@ public class ur5_kinematics : MonoBehaviour
     public bool enabled = true;
     public bool debug_pose = false;
     public float[] output_xyz_rot = new float[6];
+    public float[] angle_vector = new float[6];
 
 
     //[Range(0, 360)]
@@ -151,8 +152,10 @@ public class ur5_kinematics : MonoBehaviour
             //Debug.Log(world_to_cube);
 
             /*  Data formatter for matrix*/
-            Matrix<float> fwd_kin_mat = robotModel.fwd_kin(temp_sol);
-            locate_real_world_pt(fwd_kin_mat);
+            //Matrix<float> fwd_kin_mat = robotModel.fwd_kin(temp_sol);
+            //locate_real_world_pt(fwd_kin_mat);
+
+
             //Debug.Log(sanity_check);
 
             //Convert into degrees
@@ -162,7 +165,7 @@ public class ur5_kinematics : MonoBehaviour
             if (debug_pose)
             {
                 float[] my_vals = { -42.58f, -43.69f, -99.57f, 233.2f, -89.66f, -47.09f };
-                //angle_vector = my_vals;
+                angle_vector = my_vals;
                 controller.setSliderList(controller.offsetJointValues(my_vals));
             }
             else
@@ -174,7 +177,7 @@ public class ur5_kinematics : MonoBehaviour
                 array_sol[3] += offset_3;
                 array_sol[4] += offset_4;
                 array_sol[5] += offset_5;
-                //angle_vector = array_sol;
+                angle_vector = array_sol;
                 controller.setSliderList(controller.offsetJointValues(array_sol));
 
             }
@@ -231,7 +234,9 @@ public class ur5_kinematics : MonoBehaviour
 
     public float[] get_vector_UR5()
     {
-        return output_xyz_rot;
+        //return output_xyz_rot;
+        return angle_vector;
+
     }
 
 

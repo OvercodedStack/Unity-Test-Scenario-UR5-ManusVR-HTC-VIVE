@@ -56,23 +56,29 @@ public class UR5_to_TPC : MonoBehaviour
 
         out_stg += "Gripper:";
         out_stg += grip_obj.get_ratio().ToString();
-        out_stg += ";";
+        out_stg += "; ";
         return out_stg;
     }
 
     void add_active_state()
     {
+
+
+    }
+
+    private void Update()
+    {
+        output_string = "";
         output_string = convert_array(angle_controller.get_vector_UR5());
         output_string += add_gripper();
-        output_string += "\n";
+        output_string += "\0 NUL NULL";
         //server.SendMessage(output_string);
         server.set_msg(output_string);
-
     }
     string convert_array(float[] array_in)
     {
         string output_str = null;
-        output_str += "UR5_pos:";
+        output_str += "UR5_pos>";
         for (int i = 0; i < 6; i++)
         {
             output_str += array_in[i].ToString();

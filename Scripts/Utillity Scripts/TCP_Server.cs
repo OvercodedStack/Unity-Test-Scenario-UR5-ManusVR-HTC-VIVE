@@ -30,7 +30,7 @@ namespace TPC_Server
         #endregion
         public string IPC_comms_message = "null_msg";
         public string IPC_output = "null";
-
+      
         // Use this for initialization
         void Start()
         {
@@ -41,12 +41,21 @@ namespace TPC_Server
         }
 
         // Update is called once per frame
+        [Range (0.1F, 20)]
+        public float delay_time = 2.0F;
+       
+        private float last_call = 0.0F; 
         void Update()
         {
             //if (Input.GetKeyDown(KeyCode.Space))
             //{
-            SendMessage(IPC_comms_message);
+            //    SendMessage(IPC_comms_message);
             //}
+            if (Time.time > last_call)
+            {
+                last_call = Time.time + delay_time;
+                SendMessage(IPC_comms_message);
+            }
         }
 
         public void set_msg(string msg_out)
@@ -62,7 +71,7 @@ namespace TPC_Server
             try
             {
                 // Create listener on localhost port 8052. 			
-                tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), 27015);
+                tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), 27000);
                 tcpListener.Start();
                 Debug.Log("Server is listening");
                 Byte[] bytes = new Byte[1024];
@@ -117,6 +126,7 @@ namespace TPC_Server
                     // Write byte array to socketConnection stream.               
                     stream.Write(serverMessageAsByteArray, 0, serverMessageAsByteArray.Length);
                     Debug.Log("Server sent his message - should be received by client");
+                    Debug.Log(serverMessageAsByteArray.Length);
                 }
                 ///Debug.Log("Hi, I'm a job!");
             }
