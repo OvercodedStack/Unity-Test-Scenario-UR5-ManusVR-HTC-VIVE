@@ -32,31 +32,20 @@ public class hand_pickup : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //GameObject game_thing = GameObject.Find("Manus_VR_Driver");     //Seek global API
-
         manus_inpt = Manus_API.GetComponent<Manus_interpreter>();
         interact = this.GetComponent<interaction>();
     }
-
-    // Update is called once per frame
-    //void Update () {
-
-
-    //void OnCollisionEnter(Collision collision)
-    //{
-
-    //    target_object = GameObject.Find(collision.collider.name); //Locate the other object this object is in collision with. 
-    //    name = collision.collider.name;
-    //     distance_to_target = target_object.transform.position - this.transform.position ;//Distance offset
-    //    Debug.Log("Clicked");
-    // }
-
+    
+    //Live Update function that allows dynamic checking if the Manus VR glove is in "pick-up" mode or rotate mode. 
     private void Update()
     {
-        is_grab = manus_inpt.get_hand(is_right).get_grabbing(); //Rightmost hand
+        is_grab = manus_inpt.get_hand(is_right).get_grabbing(); //check if rightmost hand, true if so. 
         finger_array = manus_inpt.get_hand(is_right).get_raw_hand().ToArray();
         int counter = 0;
-        
+     
+        //While grabbing is determined directly from the Manus VR API, thumbs up has been implemented on the application side. 
+        //The following conditionals are used to determine if a Manus glove is thumbs-upping. 
+        //Check if more than 8 fingers are compressed
         for (int i = 0; i < 8; i++)
         {        
             if (finger_array[i] > .85)
@@ -65,6 +54,7 @@ public class hand_pickup : MonoBehaviour
             }
         }
 
+        //Check if two are at least uncompressed. 
         if (counter >= 7 && finger_array[8] < .3 && finger_array[9] < .3)
         {
             is_thumbs_up = true;
@@ -76,7 +66,7 @@ public class hand_pickup : MonoBehaviour
             is_thumbs_up = false; 
         }
 
-
+        //Grabbing conditional. 
         if (is_grab)
         {
             //target_object.transform.position = distance_to_target + this.transform.position;
@@ -86,9 +76,6 @@ public class hand_pickup : MonoBehaviour
         {
             interact.Drop(this.GetComponent<Rigidbody>());
         }
-
-       
-
     }
 }
 

@@ -10,7 +10,7 @@
 //  ===========
 //  Data phraser from Manus to TPC server. 
 //
-//  NOT IN USE
+//  ==============================NOT IN USE===================================
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@
 
 
 
-
+//==============================NOT IN USE===================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,7 +48,7 @@ public class Manus_To_TCP : MonoBehaviour {
 
 	}
 
-
+ //   ==============================NOT IN USE===================================
     //string convert_array()
     //{
 
@@ -72,7 +72,7 @@ public class Manus_To_TCP : MonoBehaviour {
         }
         return "null";
     }
-
+    //   ==============================NOT IN USE===================================
 
 
 }

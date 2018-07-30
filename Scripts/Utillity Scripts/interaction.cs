@@ -1,4 +1,18 @@
-﻿using System.Collections;
+﻿///////////////////////////////////////////////////////////////////////////////
+//
+//  Original System: UR5_to_TPC.cs
+//  Subsystem:       Human-Robot Interaction
+//  Workfile:        Unity workspace?
+//  Revision:        1.0 - 7/7/2018
+//  Author:          Esteban Segarra
+//
+//  Description
+//  ===========
+//  Interaction class for objects 
+//  Adopted from https://www.youtube.com/watch?v=q86rb1Eq-bA
+///////////////////////////////////////////////////////////////////////////////
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +26,7 @@ public class interaction : MonoBehaviour {
         attach_joint = GetComponent<FixedJoint>();
 	}
 
+    //If Colliding, check for interaction.
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Interact"))
@@ -21,6 +36,7 @@ public class interaction : MonoBehaviour {
         rigidbody_list.Add(other.gameObject.GetComponent<Rigidbody>());
     }
 
+    //Check if no longer colliding
     private void OnTriggerExit(Collider other)
     {
         if (!other.gameObject.CompareTag("Interact"))
@@ -82,6 +98,7 @@ public class interaction : MonoBehaviour {
 
     }
 
+    //Rotate about the selected rigidbody. 
     public void Rotate()
     {
         current_rigidBody = Get_Nearest_RigidBody();
@@ -95,6 +112,7 @@ public class interaction : MonoBehaviour {
 
     }
 
+    //Overloading for dropping with a device
     public void Drop(SteamVR_Controller.Device device)
     {
         if (!current_rigidBody)
@@ -110,7 +128,7 @@ public class interaction : MonoBehaviour {
 
     }
 
-
+    //Overloading in case there's no device just a rigidbody. 
     public void Drop(Rigidbody device)
     {
         if (!current_rigidBody)

@@ -8,7 +8,9 @@
 //
 //  Description
 //  ===========
-//  IK programming for virtual UR5 
+//  IK programming for virtual UR5.
+//
+//  get_vector_UR5() - Returns a joint configuration present for the UR5 
 //
 ///////////////////////////////////////////////////////////////////////////////
 using UnityEngine;

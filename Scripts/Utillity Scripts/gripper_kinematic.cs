@@ -8,7 +8,7 @@
 //
 //  Description
 //  ===========
-//  Gripper Control on UR5
+//  Gripper Control on UR5. This used to view the asthetics on the simulated UR5
 //
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -24,7 +24,6 @@ public class UR5_to_TPC : MonoBehaviour
     ur5_kinematics angle_controller;
     gripper_kinematic grip_obj;
     public GameObject robot;
-    public Button send_msg;
 
     // Use this for initialization
     void Start()
@@ -35,21 +34,9 @@ public class UR5_to_TPC : MonoBehaviour
 
         //GameObject robot = GameObject.Find("UR5");
         angle_controller = robot.GetComponent<ur5_kinematics>();
-        send_msg.onClick.AddListener(add_active_state);
     }
 
-
-
-    ////Update is called once per frame
-    ////void Update()
-    ////{
-    ////    output_string = convert_array(angle_controller.get_vector_UR5());
-    ////    output_string += add_gripper();
-    ////    output_string += "\n";
-
-    ////    / server.SendMessage(output_string);
-    ////}
-
+    //Add the grippper data to the string
     string add_gripper()
     {
         string out_stg = null;
@@ -60,21 +47,18 @@ public class UR5_to_TPC : MonoBehaviour
         return out_stg;
     }
 
-    void add_active_state()
-    {
-
-
-    }
-
+    //Runstate
     private void Update()
     {
         output_string = "";
         output_string = convert_array(angle_controller.get_vector_UR5());
         output_string += add_gripper();
-        output_string += "\0 NUL NULL";
+        output_string += "\0 NUL NULL"; //Termination of string required on backend of websocket (C++) 
         //server.SendMessage(output_string);
         server.set_msg(output_string);
     }
+
+    //Convert an array into a formatted string. 
     string convert_array(float[] array_in)
     {
         string output_str = null;

@@ -1,4 +1,18 @@
-﻿//Code Adopt from https://gist.github.com/danielbierwirth/0636650b005834204cb19ef5ae6ccedb
+﻿///////////////////////////////////////////////////////////////////////////////
+//
+//  Original System: UR5_to_TPC.cs
+//  Subsystem:       Human-Robot Interaction
+//  Workfile:        Unity workspace?
+//  Revision:        1.0 - 6/29/2018
+//  Author:          Esteban Segarra
+//
+//  Description
+//  ===========
+//  Data phraser from UR5 to TPC server. 
+//
+///////////////////////////////////////////////////////////////////////////////
+
+//Code Adopt from https://gist.github.com/danielbierwirth/0636650b005834204cb19ef5ae6ccedb
 
 using System;
 using System.Collections;
@@ -45,6 +59,9 @@ namespace TPC_Server
         public float delay_time = 2.0F;
        
         private float last_call = 0.0F; 
+
+        //Update function running at a specified timing. Best times are those higher than 1 - 2 seconds to allow the winsock
+        //websocket to load the buffer without overflow. 
         void Update()
         {
             //if (Input.GetKeyDown(KeyCode.Space))
@@ -58,6 +75,7 @@ namespace TPC_Server
             }
         }
 
+        //Method to set the string_msg out towards
         public void set_msg(string msg_out)
         {
             IPC_comms_message = msg_out;
@@ -102,6 +120,8 @@ namespace TPC_Server
                 Debug.Log("SocketException " + socketException.ToString());
             }
         }
+
+
         /// <summary> 	
         /// Send message to client using socket connection. 	
         /// </summary> 	

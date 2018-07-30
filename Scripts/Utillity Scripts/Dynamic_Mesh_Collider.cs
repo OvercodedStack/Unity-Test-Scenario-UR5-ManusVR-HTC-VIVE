@@ -1,6 +1,6 @@
 ﻿/*Code from https://forum.unity.com/threads/raycast-without-colliders.14378/ 
- * 
- * 
+ * This code is primarily concerned with attaching a dynamically altering collider mesh around the Manus Gloves.
+ * It works as expected. 
  * 
  *
 */

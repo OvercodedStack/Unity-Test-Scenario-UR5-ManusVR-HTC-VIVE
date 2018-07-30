@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VIVE_controller : MonoBehaviour {
-
+    //Variables and constants. 
     private SteamVR_TrackedObject track_obj;
     private SteamVR_Controller.Device device_obj;
     private interaction interact;
@@ -26,8 +26,6 @@ public class VIVE_controller : MonoBehaviour {
     private bool release_gripper = false;
     public GameObject gripper;
     private gripper_kinematic kine;
-    //private SteamVR_TrackedController controller;
-
 
 	// Use this for initialization
 	void Start () {
@@ -36,9 +34,6 @@ public class VIVE_controller : MonoBehaviour {
         kine = gripper.GetComponent<gripper_kinematic>();
          
     }
-
- 
-
 
     // Update is called once per frame
     void Update () {
@@ -51,7 +46,7 @@ public class VIVE_controller : MonoBehaviour {
             device_obj.TriggerHapticPulse(100);
             interact.Pickup();
         } 
-
+        //Trigger conditional 
         if (device_obj.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
         {
             interact.Drop(device_obj);
@@ -76,8 +71,10 @@ public class VIVE_controller : MonoBehaviour {
         //Release gripper conditional. 
         if (release_gripper)
             {
+            //If greater, attempt to "close"
             if (gripper_ratio > 0)
                 gripper_ratio -= gripper_speed; 
+            //If shut, reset. 
             if (gripper_ratio <= 0)
             {
                 gripper_ratio = 0;
@@ -87,23 +84,20 @@ public class VIVE_controller : MonoBehaviour {
         }
 
 
-        //Test
+        //Touchpad controls for rotating. 
         if (device_obj.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
         {
             float tiltAroundX = device_obj.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0).x;
             float tiltAroundY = device_obj.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0).y;
             interact.Rotate(tiltAroundX, tiltAroundY);
- 
             device_obj.TriggerHapticPulse(100);
         }
-
-
-
-            //Gripper data
-            kine.set_grip(gripper_ratio);
+        //Gripper data
+        kine.set_grip(gripper_ratio);
         Vector2 trig_Val = device_obj.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger);
     }
 
+    //Return gripper status
     public float get_ratio()
     {
         return gripper_ratio;

@@ -8,7 +8,8 @@
 //
 //  Description
 //  ===========
-//  Manus_VR Hand data phraser - intended to wrap around a gameobject and provide nessesary values to a mesh in order to simulate compression and orientation.
+//  Manus_VR Hand data phraser - intended to wrap around a gameobject and provide nessesary values to 
+//  a mesh in order to simulate compression and orientation.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -134,7 +135,7 @@ public class Manus_hand_model_inputter : MonoBehaviour
         ////Quaternion temp_q = orientations[0].get_finger_data()[2].rotation;
         ////Quaternion out_q = new Quaternion((float) (temp_q.x * 180 / 3.14168), (float)(temp_q.y * 180 / 3.14168), (float)(temp_q.z * 180 / 3.14168), (float)(-temp_q.w * 180 / 3.14168));
         //// Quaternion out_q = new Quaternion(0, 0, (float)(temp_q.w * 180 / 3.14168), 0);
-        ////check_me_lol = out_q;
+        ////check_me = out_q;
         ////fingers_occulus[0].transform.localRotation = out_q;
 
 
