@@ -18,6 +18,7 @@ This Unity assets folder was built as a result of developing the Manus VR API fo
 ## Optional Software
 - Manus VR SDK V1.1.1 (Optional if you intend to use the Manus VR Gloves) 
 - Collaborative Robotics Programming Interface by National Institute of Standards and Technology (CRPI) communication/processing API
+  https://github.com/usnistgov/CRPI
 
 # Quick Start
 Clone this repository and copy over the files onto a fresh Unity Project. Assume this repository to be an assets folder as in Unity. By copying over the files. Once installed, located the unity scene named **ManusVR - VIVE - UR5 Sim**. This file will contain most of the UR5 simulation scene built for Unity. This scene should be out-of-box ready to use. 
