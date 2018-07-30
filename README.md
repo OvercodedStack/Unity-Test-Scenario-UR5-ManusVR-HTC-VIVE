@@ -26,7 +26,7 @@ Clone this repository and copy over the files onto a fresh Unity Project. Assume
 # Synopsis
 The primary focus of this project was being able to simulate and control a UR5 robot using the virtual controls. The form to control the robot more or less equivalent to being able to move around the final end point of the robot around the space around it. The joint angles that the robot would require to move around the world will be calculated through inverse kinematics. These calculations can then be transferred as an array to the simulated robot as well as the real-world robot. 
 
-# Example useage
+# Example usage
 Start the Unity project. Locate the gameobject called handlepoint. This point is the gameobject **targetted** for the inverse kinematics to point towards. The handlepoint can be located anywhere except in locations that create singularity problems such as directly onto the Z axis, it's own base, or an impossible configuration. 
 
 Care must be taken to avoid sending data to the real-life UR5 about impossible configurations. If you would like to understand use, start by moving the sim UR5 toolpoint around the world with a HTC VIVE and undersand it's behaviour. One special thing to note about the UR5 and CRPI is that CRPI will tend arrive to a location through a motion within 360 degrees. For example if the tool point is moved from the 1st quadrant to the 4th quadrant, the robot will move through the 2nd and 3rd quadrant to rotate to the final point. This is due limitations imposed by the inverse kinematics to avoid damage to the base. 
