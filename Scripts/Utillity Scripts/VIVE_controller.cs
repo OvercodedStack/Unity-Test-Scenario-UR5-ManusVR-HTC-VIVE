@@ -26,6 +26,7 @@ public class VIVE_controller : MonoBehaviour {
     private bool release_gripper = false;
     public GameObject gripper;
     private gripper_kinematic kine;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -87,13 +88,15 @@ public class VIVE_controller : MonoBehaviour {
         //Touchpad controls for rotating. 
         if (device_obj.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
         {
+            interact.Drop(device_obj);
             float tiltAroundX = device_obj.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0).x;
             float tiltAroundY = device_obj.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0).y;
             interact.Rotate(tiltAroundX, tiltAroundY);
             device_obj.TriggerHapticPulse(100);
+            Debug.Log("Bounce");
         }
-        //Gripper data
-        kine.set_grip(gripper_ratio);
+        if (device_obj.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
+            interact.Drop(device_obj);
         Vector2 trig_Val = device_obj.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger);
     }
 

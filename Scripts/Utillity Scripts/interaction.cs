@@ -16,15 +16,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class interaction : MonoBehaviour {
+public class interaction : MonoBehaviour
+{
     private FixedJoint attach_joint = null;
     private Rigidbody current_rigidBody = null;
     private List<Rigidbody> rigidbody_list = new List<Rigidbody>();
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake()
+    {
         attach_joint = GetComponent<FixedJoint>();
-	}
+    }
 
     //If Colliding, check for interaction.
     private void OnTriggerEnter(Collider other)
@@ -73,15 +75,16 @@ public class interaction : MonoBehaviour {
 
         if (!current_rigidBody)
         {
+            Debug.Log("no");
             return;
         }
         Vector3 rotation_new = current_rigidBody.transform.localEulerAngles;
         rotation_new.x += multiplier * x;
-        rotation_new.y += multiplier * y; 
+        rotation_new.y += multiplier * y;
 
         current_rigidBody.transform.localEulerAngles = rotation_new;
         attach_joint.connectedBody = current_rigidBody;
-
+        Debug.Log("Rot");
     }
 
     //Rotating around quaternion
@@ -151,7 +154,7 @@ public class interaction : MonoBehaviour {
         float min_dist = float.MaxValue;
         float dist = 0.0f;
 
-        foreach(Rigidbody contact_body in rigidbody_list)
+        foreach (Rigidbody contact_body in rigidbody_list)
         {
             dist = (contact_body.gameObject.transform.position - transform.position).sqrMagnitude;
             if (dist < min_dist)
@@ -162,5 +165,5 @@ public class interaction : MonoBehaviour {
         }
         return nearest_rigid;
     }
- 
+
 }
