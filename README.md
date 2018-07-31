@@ -41,7 +41,7 @@ Some minor errors to note include the following:
 - A Kalhman filter for Manus VR data
 - Issue when building-> Dependency mismatch 
 - Improve Manus VR rotational control over objects
-- HTC VIVE controllers bug out of being able to control UR5 Tool point after rotating it (Most likely a script issue) 
+- ~HTC VIVE controllers bug out of being able to control UR5 Tool point after rotating it (Most likely a script issue)~
 - Optimization (At preset is ok, but could be better) 
 
 ## Disclaimer
