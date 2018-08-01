@@ -93,7 +93,7 @@ public class VIVE_controller : MonoBehaviour {
             float tiltAroundY = device_obj.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0).y;
             interact.Rotate(tiltAroundX, tiltAroundY);
             device_obj.TriggerHapticPulse(100);
-            Debug.Log("Bounce");
+           // Debug.Log("Bounce");
         }
         if (device_obj.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
             interact.Drop(device_obj);

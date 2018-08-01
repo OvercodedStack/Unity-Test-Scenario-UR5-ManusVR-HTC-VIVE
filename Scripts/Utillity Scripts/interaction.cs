@@ -75,7 +75,7 @@ public class interaction : MonoBehaviour
 
         if (!current_rigidBody)
         {
-            Debug.Log("no");
+            //Debug.Log("no");
             return;
         }
         Vector3 rotation_new = current_rigidBody.transform.localEulerAngles;
@@ -84,7 +84,7 @@ public class interaction : MonoBehaviour
 
         current_rigidBody.transform.localEulerAngles = rotation_new;
         attach_joint.connectedBody = current_rigidBody;
-        Debug.Log("Rot");
+        //Debug.Log("Rot");
     }
 
     //Rotating around quaternion
